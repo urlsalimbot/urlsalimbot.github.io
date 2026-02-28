@@ -257,6 +257,7 @@ a:hover {
    5. HEADER STYLES
    ======================================== */
 header {
+  justify-self: center;
   text-align: center;
   padding: 6rem 0 3rem;
   position: relative;
@@ -413,13 +414,13 @@ section:last-of-type {
   gap: 2rem;
 }
 
-.about-content{
+.about-content {
   flex: 1;
 }
 
-.about-content>p{
+.about-content > p {
   text-indent: 20px;
-  text-align: justify ;
+  text-align: justify;
 }
 
 /* ========================================
@@ -1382,7 +1383,44 @@ button:focus-visible {
 }
 
 /* ========================================
-   21. SCROLLING GRADIENT
+   21. CURSOR
+   ======================================== */
+header > h1 {
+  font-family: "Courier New", Courier, monospace;
+}
+
+.typewrite-effect{
+  justify-content: center;
+}
+
+#header {
+  display: flex;
+  align-items: baseline; /* Aligns the cursor to the bottom of the letters */
+}
+
+#cursor {
+  /* line-height: 17px; */
+  display: inline-block; /* Crucial: allows it to sit on the same line */
+  margin-left: 10px;
+  animation: blink 0.8s infinite;
+  width: 25px;
+  height: 8px;
+}
+
+@keyframes blink {
+  0% {
+    background: transparent;
+  }
+  50% {
+    background: #fff;
+  }
+  100% {
+    background: transparent;
+  }
+}
+
+/* ========================================
+   22. SCROLLING GRADIENT
    ======================================== */
 
 @keyframes ani-your_css_selector_here {
