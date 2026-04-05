@@ -1,0 +1,469 @@
+/**
+ * JavaScript Portfolio - Interactive Features
+ * Author: Earl Salimbot
+ * Description: Adds interactivity to the portfolio website including
+ *              text manipulation, color changers, dark mode, and more.
+ */
+
+// ========================================
+// 1. TEXT MANIPULATION
+// ========================================
+
+/**
+ * Changes the header title text dynamically
+ */
+function changeTitle() {
+  const header = document.getElementById("header");
+  const originalText = header.childNodes[0].textContent.trim();
+
+  if (originalText === "Earl Salimbot") {
+    header.childNodes[0].textContent = " Welcome to My Portfolio ";
+  } else {
+    header.childNodes[0].textContent = " Earl Salimbot ";
+  }
+}
+
+// ========================================
+// 2. BACKGROUND COLOR CHANGER
+// ========================================
+
+// Array of background colors to cycle through
+const bgColors = [
+  "#050505", // Original dark
+  "#0a192f", // Navy blue
+  "#1a0a2e", // Deep purple
+  "#0a2e1a", // Dark green
+  "#2e0a0a", // Dark red
+  "#2e1a0a", // Dark orange
+  "#1a1a2e", // Dark indigo
+];
+let currentBgIndex = 0;
+
+/**
+ * Changes the background color on each click
+ */
+function changeBackgroundColor() {
+  currentBgIndex = (currentBgIndex + 1) % bgColors.length;
+  document.body.style.backgroundColor = bgColors[currentBgIndex];
+  document.body.style.backgroundImage = "none";
+  showNotification(`Background changed!`);
+}
+
+// ========================================
+// 3. FONT COLOR CHANGER
+// ========================================
+
+// Array of text colors to cycle through
+const textColors = [
+  "#c9c9c9", // Original light gray
+  "#a0c4ff", // Soft blue
+  "#bdb2ff", // Soft purple
+  "#caffbf", // Soft green
+  "#ffadad", // Soft red
+  "#ffd6a5", // Soft orange
+  "#fdffb6", // Soft yellow
+];
+let currentTextColorIndex = 0;
+
+/**
+ * Changes the text color on each click
+ */
+function changeFontColor() {
+  currentTextColorIndex = (currentTextColorIndex + 1) % textColors.length;
+  document.body.style.color = textColors[currentTextColorIndex];
+  showNotification(`Text color changed!`);
+}
+
+// ========================================
+// 4. DARK MODE TOGGLE
+// ========================================
+
+let isDarkMode = true; // Starts in dark mode by default
+
+/**
+ * Toggles between light mode and dark mode
+ */
+function toggleDarkMode() {
+  isDarkMode = !isDarkMode;
+
+  if (isDarkMode) {
+    // Apply dark mode
+    document.body.style.setProperty("--bg-primary", "#050505");
+    document.body.style.setProperty("--bg-secondary", "#0a0a0a");
+    document.body.style.setProperty("--bg-tertiary", "#0f0f0f");
+    document.body.style.setProperty("--bg-card", "#0d0d0d");
+    document.body.style.setProperty("--text-primary", "#ffffff");
+    document.body.style.setProperty("--text-secondary", "#c9c9c9");
+    document.body.style.setProperty("--text-muted", "#a0a0a0");
+    document.body.style.backgroundColor = "#050505";
+    document.body.style.color = "#c9c9c9";
+    document.body.style.backgroundImage = "";
+    document.body.classList.remove("light-mode");
+    showNotification("Dark mode activated!");
+  } else {
+    // Apply light mode
+    document.body.style.setProperty("--bg-primary", "#ffffff");
+    document.body.style.setProperty("--bg-secondary", "#f5f5f5");
+    document.body.style.setProperty("--bg-tertiary", "#e8e8e8");
+    document.body.style.setProperty("--bg-card", "#fafafa");
+    document.body.style.setProperty("--text-primary", "#1a1a1a");
+    document.body.style.setProperty("--text-secondary", "#333333");
+    document.body.style.setProperty("--text-muted", "#555555");
+    document.body.style.backgroundColor = "#ffffff";
+    document.body.style.color = "#333333";
+    document.body.style.backgroundImage = "none";
+    document.body.classList.add("light-mode");
+    showNotification("Light mode activated!");
+  }
+}
+
+// ========================================
+// 5. CLICK INTERACTION
+// ========================================
+
+let clickCount = 0;
+const clickMessages = [
+  "You clicked the button!",
+  "Nice click! Keep going!",
+  "Wow, you're really committed to this!",
+  "That's a lot of clicks!",
+  "You're unstoppable!",
+  "Click master!",
+  "Legendary click count!",
+];
+
+/**
+ * Displays a message and tracks click count
+ */
+function handleClickInteraction() {
+  clickCount++;
+  const messageElement = document.getElementById("click-message");
+  const countElement = document.getElementById("click-count");
+
+  if (messageElement) {
+    const messageIndex = Math.min(
+      Math.floor((clickCount - 1) / 1),
+      clickMessages.length - 1
+    );
+    messageElement.textContent = clickMessages[messageIndex];
+    messageElement.style.opacity = "1";
+  }
+
+  if (countElement) {
+    countElement.textContent = clickCount;
+  }
+
+  // Show notification
+  showNotification(`Click #${clickCount}!`);
+}
+
+// ========================================
+// 6. UNDO / RESET BUTTON
+// ========================================
+
+/**
+ * Resets ALL changes back to original state
+ */
+function resetAll() {
+  // Reset background
+  document.body.style.backgroundColor = "";
+  document.body.style.backgroundImage = "";
+  document.body.style.color = "";
+
+  // Reset CSS variables to defaults
+  document.body.style.removeProperty("--bg-primary");
+  document.body.style.removeProperty("--bg-secondary");
+  document.body.style.removeProperty("--bg-tertiary");
+  document.body.style.removeProperty("--bg-card");
+  document.body.style.removeProperty("--text-primary");
+  document.body.style.removeProperty("--text-secondary");
+  document.body.style.removeProperty("--text-muted");
+
+  // Remove light mode class
+  document.body.classList.remove("light-mode");
+  isDarkMode = true;
+
+  // Reset counters
+  currentBgIndex = 0;
+  currentTextColorIndex = 0;
+  clickCount = 0;
+
+  // Reset header text
+  const header = document.getElementById("header");
+  if (header && header.childNodes[0]) {
+    header.childNodes[0].textContent = " Earl Salimbot ";
+  }
+
+  // Reset click message
+  const messageElement = document.getElementById("click-message");
+  if (messageElement) {
+    messageElement.textContent = "";
+    messageElement.style.opacity = "0";
+  }
+
+  const countElement = document.getElementById("click-count");
+  if (countElement) {
+    countElement.textContent = "0";
+  }
+
+  // Reset font size
+  document.body.style.fontSize = "";
+
+  // Show/hide sections - show all hidden sections
+  const sections = document.querySelectorAll("section, .project, article");
+  sections.forEach((section) => {
+    section.style.display = "";
+  });
+
+  // Clear notification
+  hideNotification();
+
+  showNotification("All changes reset to default!");
+}
+
+// ========================================
+// BONUS FEATURE 1: SHOW/HIDE SECTION
+// ========================================
+
+/**
+ * Toggles visibility of a specific section
+ * @param {string} sectionId - The ID of the section to toggle
+ */
+function toggleSection(sectionId) {
+  const section = document.getElementById(sectionId);
+  if (section) {
+    if (section.style.display === "none") {
+      section.style.display = "";
+      showNotification("Section shown!");
+    } else {
+      section.style.display = "none";
+      showNotification("Section hidden!");
+    }
+  }
+}
+
+// ========================================
+// BONUS FEATURE 2: TYPING EFFECT
+// ========================================
+
+const typingTexts = [
+  "Game Developer",
+  "Game Designer",
+  "3D Artist",
+  "Creative Thinker",
+  "Problem Solver",
+];
+let currentTypingIndex = 0;
+let currentCharIndex = 0;
+let isDeleting = false;
+let typingInterval;
+
+/**
+ * Creates a typing effect in the subtitle
+ */
+function typeEffect() {
+  const subtitle = document.getElementById("typing-subtitle");
+  if (!subtitle) return;
+
+  const currentText = typingTexts[currentTypingIndex];
+
+  if (isDeleting) {
+    subtitle.textContent = currentText.substring(0, currentCharIndex - 1);
+    currentCharIndex--;
+  } else {
+    subtitle.textContent = currentText.substring(0, currentCharIndex + 1);
+    currentCharIndex++;
+  }
+
+  let typeSpeed = isDeleting ? 50 : 100;
+
+  if (!isDeleting && currentCharIndex === currentText.length) {
+    typeSpeed = 2000; // Pause at end
+    isDeleting = true;
+  } else if (isDeleting && currentCharIndex === 0) {
+    isDeleting = false;
+    currentTypingIndex = (currentTypingIndex + 1) % typingTexts.length;
+    typeSpeed = 500; // Pause before next word
+  }
+
+  typingInterval = setTimeout(typeEffect, typeSpeed);
+}
+
+/**
+ * Starts the typing effect
+ */
+function startTypingEffect() {
+  if (typingInterval) {
+    clearTimeout(typingInterval);
+  }
+  currentCharIndex = 0;
+  isDeleting = false;
+  typeEffect();
+}
+
+/**
+ * Stops the typing effect
+ */
+function stopTypingEffect() {
+  if (typingInterval) {
+    clearTimeout(typingInterval);
+    typingInterval = null;
+  }
+}
+
+// ========================================
+// BONUS FEATURE 3: FONT SIZE CHANGER
+// ========================================
+
+let currentFontSize = 16; // Default font size in px
+
+/**
+ * Changes the base font size of the page
+ * @param {number} change - Positive to increase, negative to decrease
+ */
+function changeFontSize(change) {
+  currentFontSize += change;
+  // Clamp between 12px and 24px
+  currentFontSize = Math.max(12, Math.min(24, currentFontSize));
+  document.body.style.fontSize = currentFontSize + "px";
+  showNotification(`Font size: ${currentFontSize}px`);
+}
+
+// ========================================
+// NOTIFICATION SYSTEM
+// ========================================
+
+/**
+ * Shows a temporary notification message
+ * @param {string} message - The message to display
+ */
+function showNotification(message) {
+  let notification = document.getElementById("notification");
+
+  // Create notification element if it doesn't exist
+  if (!notification) {
+    notification = document.createElement("div");
+    notification.id = "notification";
+    notification.className = "notification";
+    document.body.appendChild(notification);
+  }
+
+  notification.textContent = message;
+  notification.classList.add("show");
+
+  // Auto-hide after 2 seconds
+  setTimeout(() => {
+    notification.classList.remove("show");
+  }, 2000);
+}
+
+/**
+ * Hides the notification
+ */
+function hideNotification() {
+  const notification = document.getElementById("notification");
+  if (notification) {
+    notification.classList.remove("show");
+  }
+}
+
+// ========================================
+// INITIALIZATION
+// ========================================
+
+/**
+ * Creates the interactive control panel
+ */
+function createControlPanel() {
+  // Don't create panel if it already exists
+  if (document.getElementById("control-panel")) return;
+
+  // Create panel container
+  const panel = document.createElement("div");
+  panel.id = "control-panel";
+  panel.className = "control-panel";
+
+  // Panel toggle button (to show/hide the panel)
+  const toggleBtn = document.createElement("button");
+  toggleBtn.className = "panel-toggle btn";
+  toggleBtn.textContent = "Controls";
+  toggleBtn.onclick = function () {
+    panel.classList.toggle("collapsed");
+  };
+
+  // Panel content
+  const panelContent = document.createElement("div");
+  panelContent.className = "panel-content";
+
+  // Build panel HTML
+  panelContent.innerHTML = `
+    <div class="panel-section">
+      <h3>Text Manipulation</h3>
+      <button class="btn" onclick="changeTitle()">Change Title</button>
+    </div>
+
+    <div class="panel-section">
+      <h3>Background Color</h3>
+      <button class="btn" onclick="changeBackgroundColor()">Change Background</button>
+    </div>
+
+    <div class="panel-section">
+      <h3>Font Color</h3>
+      <button class="btn" onclick="changeFontColor()">Change Text Color</button>
+    </div>
+
+    <div class="panel-section">
+      <h3>Theme</h3>
+      <button class="btn" onclick="toggleDarkMode()">Toggle Dark/Light Mode</button>
+    </div>
+
+    <div class="panel-section">
+      <h3>Click Interaction</h3>
+      <button class="btn" onclick="handleClickInteraction()">Click Me!</button>
+      <p id="click-message" class="interaction-message"></p>
+      <p class="click-count">Total clicks: <span id="click-count">0</span></p>
+    </div>
+
+    <div class="panel-section">
+      <h3>Font Size</h3>
+      <div class="font-size-controls">
+        <button class="btn" onclick="changeFontSize(-1)">A-</button>
+        <button class="btn" onclick="changeFontSize(1)">A+</button>
+      </div>
+    </div>
+
+    <div class="panel-section">
+      <h3>Typing Effect</h3>
+      <button class="btn" onclick="startTypingEffect()">Start Typing</button>
+      <button class="btn" onclick="stopTypingEffect()">Stop Typing</button>
+      <p id="typing-subtitle" class="typing-text"></p>
+    </div>
+
+    <div class="panel-section">
+      <h3>Toggle Sections</h3>
+      <div class="section-toggles">
+        <button class="btn" onclick="toggleSection('highlights')">Toggle Highlights</button>
+        <button class="btn" onclick="toggleSection('featured')">Toggle Featured</button>
+        <button class="btn" onclick="toggleSection('projects')">Toggle Projects</button>
+      </div>
+    </div>
+
+    <div class="panel-section panel-section--reset">
+      <button class="btn btn--reset" onclick="resetAll()">🔄 Reset All</button>
+    </div>
+  `;
+
+  panel.appendChild(toggleBtn);
+  panel.appendChild(panelContent);
+  panel.classList.add("collapsed"); // Start collapsed by default
+  document.body.appendChild(panel);
+}
+
+// ========================================
+// RUN ON PAGE LOAD
+// ========================================
+
+// Initialize control panel when DOM is ready
+document.addEventListener("DOMContentLoaded", function () {
+  createControlPanel();
+});
