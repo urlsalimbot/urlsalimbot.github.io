@@ -9,18 +9,29 @@
 // 1. TEXT MANIPULATION
 // ========================================
 
+// Array of titles for the typing effect
+const titleTexts = [
+  "Earl Salimbot",
+  "Welcome to My Portfolio",
+  "Game Developer",
+  "Creative Designer",
+  "3D Artist",
+];
+let currentTitleIndex = 0;
+
 /**
- * Changes the header title text dynamically
+ * Changes the header title text with cycling titles
  */
 function changeTitle() {
   const header = document.getElementById("header");
-  const originalText = header.childNodes[0].textContent.trim();
+  if (!header) return;
 
-  if (originalText === "Earl Salimbot") {
-    header.childNodes[0].textContent = " Welcome to My Portfolio ";
-  } else {
-    header.childNodes[0].textContent = " Earl Salimbot ";
-  }
+  // Get the text node (first child before the cursor div)
+  const textNode = header.childNodes[0];
+  if (!textNode) return;
+
+  currentTitleIndex = (currentTitleIndex + 1) % titleTexts.length;
+  textNode.textContent = " " + titleTexts[currentTitleIndex] + " ";
 }
 
 // ========================================
@@ -66,11 +77,36 @@ const textColors = [
 let currentTextColorIndex = 0;
 
 /**
- * Changes the text color on each click
+ * Changes the text color on each click - targets ALL text elements
  */
 function changeFontColor() {
   currentTextColorIndex = (currentTextColorIndex + 1) % textColors.length;
-  document.body.style.color = textColors[currentTextColorIndex];
+  const color = textColors[currentTextColorIndex];
+
+  // Change body color (inheritance base)
+  document.body.style.color = color;
+
+  // Target all text elements explicitly
+  const textElements = document.querySelectorAll(
+    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins"
+  );
+
+  textElements.forEach((el) => {
+    // Skip elements inside the control panel to keep it readable
+    if (el.closest("#control-panel")) return;
+    el.style.color = color;
+  });
+
+  // Also target nav links, footer links, and card elements
+  const additionalSelectors = document.querySelectorAll(
+    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn"
+  );
+
+  additionalSelectors.forEach((el) => {
+    if (el.closest("#control-panel")) return;
+    el.style.color = color;
+  });
+
   showNotification(`Text color changed!`);
 }
 
@@ -187,6 +223,7 @@ function resetAll() {
   currentBgIndex = 0;
   currentTextColorIndex = 0;
   clickCount = 0;
+  currentTitleIndex = 0;
 
   // Reset header text
   const header = document.getElementById("header");
@@ -207,13 +244,37 @@ function resetAll() {
   }
 
   // Reset font size
+  document.documentElement.style.fontSize = "";
   document.body.style.fontSize = "";
+
+  // Reset all text element styles
+  const textElements = document.querySelectorAll(
+    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins"
+  );
+
+  textElements.forEach((el) => {
+    el.style.color = "";
+    el.style.fontSize = "";
+  });
+
+  const additionalSelectors = document.querySelectorAll(
+    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn, .project, article, section"
+  );
+
+  additionalSelectors.forEach((el) => {
+    el.style.color = "";
+    el.style.fontSize = "";
+  });
 
   // Show/hide sections - show all hidden sections
   const sections = document.querySelectorAll("section, .project, article");
   sections.forEach((section) => {
     section.style.display = "";
   });
+
+  // Stop typing effects
+  stopTypingEffect();
+  stopTitleTypingEffect();
 
   // Clear notification
   hideNotification();
@@ -289,25 +350,77 @@ function typeEffect() {
   typingInterval = setTimeout(typeEffect, typeSpeed);
 }
 
+
+// ========================================
+// BONUS FEATURE 2.5: HEADER TITLE TYPING EFFECT
+// ========================================
+
+const titleTypingTexts = [
+  "Earl Salimbot",
+  "Game Developer",
+  "Game Designer",
+  "3D Artist",
+  "Creative Thinker",
+  "Problem Solver",
+];
+let currentTitleTypingIndex = 0;
+let currentTitleCharIndex = 0;
+let isTitleDeleting = false;
+let titleTypingInterval;
+
 /**
- * Starts the typing effect
+ * Creates a typing effect for the header title
  */
-function startTypingEffect() {
-  if (typingInterval) {
-    clearTimeout(typingInterval);
+function titleTypeEffect() {
+  const header = document.getElementById("header");
+  if (!header) return;
+
+  const textNode = header.childNodes[0];
+  if (!textNode) return;
+
+  const currentText = titleTypingTexts[currentTitleTypingIndex];
+
+  if (isTitleDeleting) {
+    textNode.textContent = " " + currentText.substring(0, currentTitleCharIndex - 1) + " ";
+    currentTitleCharIndex--;
+  } else {
+    textNode.textContent = " " + currentText.substring(0, currentTitleCharIndex + 1) + " ";
+    currentTitleCharIndex++;
   }
-  currentCharIndex = 0;
-  isDeleting = false;
-  typeEffect();
+
+  let typeSpeed = isTitleDeleting ? 50 : 100;
+
+  if (!isTitleDeleting && currentTitleCharIndex === currentText.length) {
+    typeSpeed = 2000; // Pause at end
+    isTitleDeleting = true;
+  } else if (isTitleDeleting && currentTitleCharIndex === 0) {
+    isTitleDeleting = false;
+    currentTitleTypingIndex = (currentTitleTypingIndex + 1) % titleTypingTexts.length;
+    typeSpeed = 500; // Pause before next word
+  }
+
+  titleTypingInterval = setTimeout(titleTypeEffect, typeSpeed);
 }
 
 /**
- * Stops the typing effect
+ * Starts the typing effect for the header title
  */
-function stopTypingEffect() {
-  if (typingInterval) {
-    clearTimeout(typingInterval);
-    typingInterval = null;
+function startTitleTypingEffect() {
+  if (titleTypingInterval) {
+    clearTimeout(titleTypingInterval);
+  }
+  currentTitleCharIndex = 0;
+  isTitleDeleting = false;
+  titleTypeEffect();
+}
+
+/**
+ * Stops the typing effect for the header title
+ */
+function stopTitleTypingEffect() {
+  if (titleTypingInterval) {
+    clearTimeout(titleTypingInterval);
+    titleTypingInterval = null;
   }
 }
 
@@ -318,14 +431,53 @@ function stopTypingEffect() {
 let currentFontSize = 16; // Default font size in px
 
 /**
- * Changes the base font size of the page
+ * Changes the base font size of ALL text on the page
  * @param {number} change - Positive to increase, negative to decrease
  */
 function changeFontSize(change) {
   currentFontSize += change;
-  // Clamp between 12px and 24px
-  currentFontSize = Math.max(12, Math.min(24, currentFontSize));
-  document.body.style.fontSize = currentFontSize + "px";
+  // Clamp between 10px and 32px
+  currentFontSize = Math.max(10, Math.min(32, currentFontSize));
+
+  // Set base font size on root element
+  document.documentElement.style.fontSize = currentFontSize + "px";
+
+  // Target all text elements explicitly for comprehensive coverage
+  const textElements = document.querySelectorAll(
+    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins"
+  );
+
+  // Calculate relative sizes for different element types
+  const baseSize = currentFontSize;
+  const sizeMap = {
+    H1: baseSize * 2.5,
+    H2: baseSize * 2,
+    H3: baseSize * 1.75,
+    H4: baseSize * 1.5,
+    H5: baseSize * 1.25,
+    H6: baseSize * 1.125,
+    default: baseSize,
+  };
+
+  textElements.forEach((el) => {
+    // Skip elements inside the control panel
+    if (el.closest("#control-panel")) return;
+
+    const tagName = el.tagName.toUpperCase();
+    const newSize = sizeMap[tagName] || sizeMap.default;
+    el.style.fontSize = newSize + "px";
+  });
+
+  // Also target special elements and cards
+  const additionalSelectors = document.querySelectorAll(
+    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn, .project, article, section"
+  );
+
+  additionalSelectors.forEach((el) => {
+    if (el.closest("#control-panel")) return;
+    el.style.fontSize = baseSize + "px";
+  });
+
   showNotification(`Font size: ${currentFontSize}px`);
 }
 
@@ -433,10 +585,9 @@ function createControlPanel() {
     </div>
 
     <div class="panel-section">
-      <h3>Typing Effect</h3>
-      <button class="btn" onclick="startTypingEffect()">Start Typing</button>
-      <button class="btn" onclick="stopTypingEffect()">Stop Typing</button>
-      <p id="typing-subtitle" class="typing-text"></p>
+      <h3>Header Title Typing</h3>
+      <button class="btn" onclick="startTitleTypingEffect()">Start Title Typing</button>
+      <button class="btn" onclick="stopTitleTypingEffect()">Stop Title Typing</button>
     </div>
 
     <div class="panel-section">
@@ -445,6 +596,9 @@ function createControlPanel() {
         <button class="btn" onclick="toggleSection('highlights')">Toggle Highlights</button>
         <button class="btn" onclick="toggleSection('featured')">Toggle Featured</button>
         <button class="btn" onclick="toggleSection('projects')">Toggle Projects</button>
+        <button class="btn" onclick="toggleSection('hero')">Toggle Hero</button>
+        <button class="btn" onclick="toggleSection('cta')">Toggle CTA</button>
+        <button class="btn" onclick="toggleSection('footer-nav')">Toggle Footer Nav</button>
       </div>
     </div>
 
