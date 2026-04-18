@@ -35,79 +35,73 @@ function changeTitle() {
 }
 
 // ========================================
-// 2. BACKGROUND COLOR CHANGER
+// 2. THEME SYSTEM (REPLACES BG + TEXT COLOR)
 // ========================================
-
-// Array of background colors to cycle through
-const bgColors = [
-  "#050505", // Original dark
-  "#0a192f", // Navy blue
-  "#1a0a2e", // Deep purple
-  "#0a2e1a", // Dark green
-  "#2e0a0a", // Dark red
-  "#2e1a0a", // Dark orange
-  "#1a1a2e", // Dark indigo
+const themes = [
+  {
+    name: "Dark Default",
+    "--bg-primary": "#050505",
+    "--bg-secondary": "#0a0a0a",
+    "--bg-tertiary": "#0f0f0f",
+    "--bg-card": "#0d0d0d",
+    "--text-primary": "#ffffff",
+    "--text-secondary": "#c9c9c9",
+  },
+  {
+    name: "Navy Blue",
+    "--bg-primary": "#0a192f",
+    "--bg-secondary": "#112240",
+    "--bg-tertiary": "#1b2a4a",
+    "--bg-card": "#16213e",
+    "--text-primary": "#e6f1ff",
+    "--text-secondary": "#a8b2d1",
+  },
+  {
+    name: "Purple",
+    "--bg-primary": "#1a0a2e",
+    "--bg-secondary": "#2a0f4a",
+    "--bg-tertiary": "#3a1664",
+    "--bg-card": "#2e1a47",
+    "--text-primary": "#f3e8ff",
+    "--text-secondary": "#d6bcfa",
+  },
+  {
+    name: "Light Mode",
+    "--bg-primary": "#ffffff",
+    "--bg-secondary": "#f5f5f5",
+    "--bg-tertiary": "#e8e8e8",
+    "--bg-card": "#fafafa",
+    "--text-primary": "#1a1a1a",
+    "--text-secondary": "#333333",
+  },
 ];
-let currentBgIndex = 0;
+
+let currentThemeIndex = 0;
 
 /**
- * Changes the background color on each click
+ * Applies a theme
  */
-function changeBackgroundColor() {
-  currentBgIndex = (currentBgIndex + 1) % bgColors.length;
-  document.body.style.backgroundColor = bgColors[currentBgIndex];
-  document.body.style.backgroundImage = "none";
-  showNotification(`Background changed!`);
+function applyTheme(index) {
+  const theme = themes[index];
+
+  Object.keys(theme).forEach((key) => {
+    if (key.startsWith("--")) {
+      document.body.style.setProperty(key, theme[key]);
+    }
+  });
+
+  document.body.style.backgroundColor = theme["--bg-primary"];
+  document.body.style.color = theme["--text-secondary"];
+
+  showNotification(`${theme.name} applied!`);
 }
 
-// ========================================
-// 3. FONT COLOR CHANGER
-// ========================================
-
-// Array of text colors to cycle through
-const textColors = [
-  "#c9c9c9", // Original light gray
-  "#a0c4ff", // Soft blue
-  "#bdb2ff", // Soft purple
-  "#caffbf", // Soft green
-  "#ffadad", // Soft red
-  "#ffd6a5", // Soft orange
-  "#fdffb6", // Soft yellow
-];
-let currentTextColorIndex = 0;
-
 /**
- * Changes the text color on each click - targets ALL text elements
+ * Cycles through themes
  */
-function changeFontColor() {
-  currentTextColorIndex = (currentTextColorIndex + 1) % textColors.length;
-  const color = textColors[currentTextColorIndex];
-
-  // Change body color (inheritance base)
-  document.body.style.color = color;
-
-  // Target all text elements explicitly
-  const textElements = document.querySelectorAll(
-    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins"
-  );
-
-  textElements.forEach((el) => {
-    // Skip elements inside the control panel to keep it readable
-    if (el.closest("#control-panel")) return;
-    el.style.color = color;
-  });
-
-  // Also target nav links, footer links, and card elements
-  const additionalSelectors = document.querySelectorAll(
-    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn"
-  );
-
-  additionalSelectors.forEach((el) => {
-    if (el.closest("#control-panel")) return;
-    el.style.color = color;
-  });
-
-  showNotification(`Text color changed!`);
+function cycleTheme() {
+  currentThemeIndex = (currentThemeIndex + 1) % themes.length;
+  applyTheme(currentThemeIndex);
 }
 
 // ========================================
@@ -120,37 +114,12 @@ let isDarkMode = true; // Starts in dark mode by default
  * Toggles between light mode and dark mode
  */
 function toggleDarkMode() {
-  isDarkMode = !isDarkMode;
+  const darkIndex = 0;
+  const lightIndex = themes.findIndex((t) => t.name === "Light Mode");
 
-  if (isDarkMode) {
-    // Apply dark mode
-    document.body.style.setProperty("--bg-primary", "#050505");
-    document.body.style.setProperty("--bg-secondary", "#0a0a0a");
-    document.body.style.setProperty("--bg-tertiary", "#0f0f0f");
-    document.body.style.setProperty("--bg-card", "#0d0d0d");
-    document.body.style.setProperty("--text-primary", "#ffffff");
-    document.body.style.setProperty("--text-secondary", "#c9c9c9");
-    document.body.style.setProperty("--text-muted", "#a0a0a0");
-    document.body.style.backgroundColor = "#050505";
-    document.body.style.color = "#c9c9c9";
-    document.body.style.backgroundImage = "";
-    document.body.classList.remove("light-mode");
-    showNotification("Dark mode activated!");
-  } else {
-    // Apply light mode
-    document.body.style.setProperty("--bg-primary", "#ffffff");
-    document.body.style.setProperty("--bg-secondary", "#f5f5f5");
-    document.body.style.setProperty("--bg-tertiary", "#e8e8e8");
-    document.body.style.setProperty("--bg-card", "#fafafa");
-    document.body.style.setProperty("--text-primary", "#1a1a1a");
-    document.body.style.setProperty("--text-secondary", "#333333");
-    document.body.style.setProperty("--text-muted", "#555555");
-    document.body.style.backgroundColor = "#ffffff";
-    document.body.style.color = "#333333";
-    document.body.style.backgroundImage = "none";
-    document.body.classList.add("light-mode");
-    showNotification("Light mode activated!");
-  }
+  currentThemeIndex = currentThemeIndex === lightIndex ? darkIndex : lightIndex;
+
+  applyTheme(currentThemeIndex);
 }
 
 // ========================================
@@ -179,7 +148,7 @@ function handleClickInteraction() {
   if (messageElement) {
     const messageIndex = Math.min(
       Math.floor((clickCount - 1) / 1),
-      clickMessages.length - 1
+      clickMessages.length - 1,
     );
     messageElement.textContent = clickMessages[messageIndex];
     messageElement.style.opacity = "1";
@@ -249,7 +218,7 @@ function resetAll() {
 
   // Reset all text element styles
   const textElements = document.querySelectorAll(
-    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins"
+    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins",
   );
 
   textElements.forEach((el) => {
@@ -258,7 +227,7 @@ function resetAll() {
   });
 
   const additionalSelectors = document.querySelectorAll(
-    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn, .project, article, section"
+    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn, .project, article, section",
   );
 
   additionalSelectors.forEach((el) => {
@@ -276,10 +245,36 @@ function resetAll() {
   stopTypingEffect();
   stopTitleTypingEffect();
 
+  // Subtitle typing reset
+  currentTypingIndex = 0;
+  currentCharIndex = 0;
+  isDeleting = false;
+
+  // Header typing reset
+  currentTitleCharIndex = 0;
+
+  // Reset subtitle text
+  const subtitle = document.getElementById("typing-subtitle");
+  if (subtitle) {
+    subtitle.textContent = "";
+  }
+
+  // Reset header text
+  if (header && header.childNodes[0]) {
+    header.childNodes[0].textContent = " Earl Salimbot ";
+  }
+
   // Clear notification
   hideNotification();
 
   showNotification("All changes reset to default!");
+}
+
+function stopTypingEffect() {
+  if (typingInterval) {
+    clearTimeout(typingInterval);
+    typingInterval = null;
+  }
 }
 
 // ========================================
@@ -350,23 +345,13 @@ function typeEffect() {
   typingInterval = setTimeout(typeEffect, typeSpeed);
 }
 
-
 // ========================================
 // BONUS FEATURE 2.5: HEADER TITLE TYPING EFFECT
 // ========================================
 
-const titleTypingTexts = [
-  "Earl Salimbot",
-  "Game Developer",
-  "Game Designer",
-  "3D Artist",
-  "Creative Thinker",
-  "Problem Solver",
-];
-let currentTitleTypingIndex = 0;
 let currentTitleCharIndex = 0;
-let isTitleDeleting = false;
 let titleTypingInterval;
+let runTitleTypingOnce = false;
 
 /**
  * Creates a typing effect for the header title
@@ -378,28 +363,21 @@ function titleTypeEffect() {
   const textNode = header.childNodes[0];
   if (!textNode) return;
 
-  const currentText = titleTypingTexts[currentTitleTypingIndex];
+  const currentText = titleTexts[currentTitleIndex];
 
-  if (isTitleDeleting) {
-    textNode.textContent = " " + currentText.substring(0, currentTitleCharIndex - 1) + " ";
-    currentTitleCharIndex--;
-  } else {
-    textNode.textContent = " " + currentText.substring(0, currentTitleCharIndex + 1) + " ";
-    currentTitleCharIndex++;
+  // Type forward only
+  textNode.textContent =
+    " " + currentText.substring(0, currentTitleCharIndex + 1) + " ";
+
+  currentTitleCharIndex++;
+
+  // Stop when fully typed
+  if (currentTitleCharIndex >= currentText.length) {
+    stopTitleTypingEffect();
+    return;
   }
 
-  let typeSpeed = isTitleDeleting ? 50 : 100;
-
-  if (!isTitleDeleting && currentTitleCharIndex === currentText.length) {
-    typeSpeed = 2000; // Pause at end
-    isTitleDeleting = true;
-  } else if (isTitleDeleting && currentTitleCharIndex === 0) {
-    isTitleDeleting = false;
-    currentTitleTypingIndex = (currentTitleTypingIndex + 1) % titleTypingTexts.length;
-    typeSpeed = 500; // Pause before next word
-  }
-
-  titleTypingInterval = setTimeout(titleTypeEffect, typeSpeed);
+  titleTypingInterval = setTimeout(titleTypeEffect, 80);
 }
 
 /**
@@ -410,7 +388,6 @@ function startTitleTypingEffect() {
     clearTimeout(titleTypingInterval);
   }
   currentTitleCharIndex = 0;
-  isTitleDeleting = false;
   titleTypeEffect();
 }
 
@@ -444,7 +421,7 @@ function changeFontSize(change) {
 
   // Target all text elements explicitly for comprehensive coverage
   const textElements = document.querySelectorAll(
-    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins"
+    "h1, h2, h3, h4, h5, h6, p, span, a, li, label, button, input, textarea, select, option, strong, em, small, blockquote, cite, code, pre, td, th, caption, figcaption, legend, dt, dd, abbr, address, b, i, u, mark, sub, sup, time, var, q, samp, kbd, del, ins",
   );
 
   // Calculate relative sizes for different element types
@@ -470,7 +447,7 @@ function changeFontSize(change) {
 
   // Also target special elements and cards
   const additionalSelectors = document.querySelectorAll(
-    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn, .project, article, section"
+    "nav a, footer a, .highlight-card, .featured-item, .project-content, .cta-btn, .btn, .project, article, section",
   );
 
   additionalSelectors.forEach((el) => {
@@ -550,18 +527,8 @@ function createControlPanel() {
   // Build panel HTML
   panelContent.innerHTML = `
     <div class="panel-section">
-      <h3>Text Manipulation</h3>
-      <button class="btn" onclick="changeTitle()">Change Title</button>
-    </div>
-
-    <div class="panel-section">
       <h3>Background Color</h3>
-      <button class="btn" onclick="changeBackgroundColor()">Change Background</button>
-    </div>
-
-    <div class="panel-section">
-      <h3>Font Color</h3>
-      <button class="btn" onclick="changeFontColor()">Change Text Color</button>
+      <button class="btn" onclick="cycleTheme()">Change Theme</button>
     </div>
 
     <div class="panel-section">
@@ -584,11 +551,6 @@ function createControlPanel() {
       </div>
     </div>
 
-    <div class="panel-section">
-      <h3>Header Title Typing</h3>
-      <button class="btn" onclick="startTitleTypingEffect()">Start Title Typing</button>
-      <button class="btn" onclick="stopTitleTypingEffect()">Stop Title Typing</button>
-    </div>
 
     <div class="panel-section">
       <h3>Toggle Sections</h3>
@@ -613,6 +575,33 @@ function createControlPanel() {
   document.body.appendChild(panel);
 }
 
+function insertonHeader() {
+  const header = document.getElementById("header");
+  if (!header) return;
+
+  const btn = document.createElement("button");
+  btn.className = "btn";
+  btn.textContent = ">";
+
+  btn.onclick = function () {
+    // Stop any running typing
+    stopTitleTypingEffect();
+
+    // Move to next title
+    currentTitleIndex = (currentTitleIndex + 1) % titleTexts.length;
+
+    // Reset typing state
+    currentTitleCharIndex = 0;
+
+    // Start typing ONCE
+    titleTypeEffect();
+
+    showNotification("Title changed!");
+  };
+
+  header.appendChild(btn);
+}
+
 // ========================================
 // RUN ON PAGE LOAD
 // ========================================
@@ -620,4 +609,6 @@ function createControlPanel() {
 // Initialize control panel when DOM is ready
 document.addEventListener("DOMContentLoaded", function () {
   createControlPanel();
+  insertonHeader();
+  applyTheme(currentThemeIndex); // ensures consistent initial state
 });
