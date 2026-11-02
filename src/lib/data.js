@@ -30,26 +30,16 @@ export const socials = [
   { label: 'Email', href: 'mailto:juhniarl@gmail.com', handle: 'juhniarl@gmail.com' },
 ];
 
-export const roles = [
-  'Game Developer',
-  '3D Artist',
-  'Creative Technologist',
-  'Problem Solver',
-];
-
 export const highlights = [
   {
-    index: '01',
     title: 'Game Development',
     text: 'Building interactive experiences in Godot and Unity, with a focus on responsive controls, game feel, and systems that hold up under play.',
   },
   {
-    index: '02',
     title: '3D Asset Production',
     text: 'High-quality models, textures, and animation in Blender, optimized for real-time rendering and built for production pipelines.',
   },
   {
-    index: '03',
     title: '2D Art & Design',
     text: 'Digital painting, sprites, and interface design in Krita and Aseprite, assembled into cohesive pipelines for 2D game art.',
   },
@@ -80,7 +70,7 @@ export const projects = [
   {
     title: 'ShroomNet Surfer',
     year: '2024',
-    image: '/work/shroomnet.png',
+    image: '/work/shroomnet.webp',
     alt: 'ShroomNet Surfer key art',
     summary:
       'A vertical slice showcasing fast-paced movement mechanics and atmospheric world-building, built around responsive controls and visual feedback.',
@@ -106,7 +96,7 @@ export const projects = [
   {
     title: '3D Recreation of Anime Characters',
     year: '2023',
-    image: '/work/characters.png',
+    image: '/work/characters.webp',
     alt: '3D recreation of an anime character in Blender',
     summary:
       'A series of fan character assets produced end to end: modeled, retopologized, rigged, textured, and ready for animation.',
@@ -124,55 +114,46 @@ export const skills = [
     items: [
       {
         name: '3D Game Asset Production',
-        level: 5,
         meta: 'Blender · Substance Painter',
         text: 'High-quality models, textures, and animation for real-time games. Low-poly and stylized work, optimized for engine budgets.',
       },
       {
         name: '2D Game Asset Production',
-        level: 5,
         meta: 'Krita · Aseprite',
         text: 'Digital painting, sprite creation, and UI design across pixel and vector pipelines.',
       },
       {
         name: 'Python',
-        level: 4,
         meta: 'Tools · Automation · Pygame',
         text: 'Game tools, automation scripts, and backend systems, including automating repetitive 3D asset tasks.',
       },
       {
         name: 'Godot',
-        level: 4,
         meta: 'GDScript · Shaders',
         text: '2D and 3D development with a node-based architecture, custom shaders, and particle systems.',
       },
       {
         name: 'C++',
-        level: 5,
         meta: 'C++11–20 · Systems',
         text: 'High-performance systems and memory management, with STL optimization and multithreaded design.',
       },
       {
         name: 'C#',
-        level: 4,
         meta: '.NET · Unity',
         text: 'Backend services, asynchronous patterns, and LINQ, plus game logic in Unity.',
       },
       {
         name: 'Unreal Engine',
-        level: 4,
         meta: 'UE5 · Blueprints',
         text: 'Blueprints and C++ integration, Nanite and Lumen environments, draw-call and shader optimization.',
       },
       {
         name: 'Unity',
-        level: 3,
         meta: 'C# · Components',
         text: 'Gameplay mechanics, UI systems, and animation and physics workflows.',
       },
       {
         name: 'Git & Version Control',
-        level: 5,
         meta: 'GitHub · Branching',
         text: 'Collaborative workflows, branching strategies, pull requests, and clean commit histories.',
       },
@@ -183,7 +164,6 @@ export const skills = [
     items: [
       {
         name: 'Game Design & Development',
-        level: 4,
         meta: 'Mechanics · Systems',
         text: 'Designing mechanics, balancing systems, and shaping player-centric experiences from concept to prototype.',
       },
@@ -194,13 +174,11 @@ export const skills = [
     items: [
       {
         name: 'Problem Solving',
-        level: 5,
         meta: 'Debugging · Systems thinking',
         text: 'A systematic approach to technical challenges, from debugging complex systems to finding creative solutions.',
       },
       {
         name: 'Communication & Collaboration',
-        level: 5,
         meta: 'Teams · Agile',
         text: 'Explaining technical ideas to varied audiences and collaborating in agile, feedback-driven teams.',
       },

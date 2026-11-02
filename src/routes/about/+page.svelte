@@ -1,5 +1,5 @@
 <script>
-  import { reveal } from '#lib/actions/reveal';
+  import Icon from '#lib/components/Icon.svelte';
   import { details, site } from '#lib/data';
 </script>
 
@@ -7,34 +7,29 @@
   <title>About — Earl Salimbot</title>
 </svelte:head>
 
-<header class="page-hero wrap">
-  <p class="eyebrow">About / 01</p>
-  <h1>Developer by trade,<br /><em>artist</em> by instinct.</h1>
+<header class="page-head wrap">
+  <h1>About</h1>
   <p class="lede">
-    I care about how a game feels in the hands: the weight of a jump, the read of a
-    silhouette, the half-second before a hit lands. That is the space where code and
-    art have to agree.
+    Game developer and 3D artist. Nine years of production experience, now finishing a
+    Computer Science degree.
   </p>
 </header>
 
 <section class="wrap about-grid">
-  <figure class="portrait" use:reveal>
-    <img src="/portrait.jpg" alt="Portrait of Earl Salimbot" width="590" height="590" />
-    <figcaption>
-      <span>Bulacan, Philippines</span>
-      <span>Portrait / 2026</span>
-    </figcaption>
+  <figure class="portrait">
+    <img src="/portrait.webp" alt="Earl Salimbot" width="590" height="590" />
+    <figcaption>Bulacan, Philippines · 2026</figcaption>
   </figure>
 
-  <div class="bio" use:reveal={{ delay: 100 }}>
-    <h2>The short version</h2>
+  <div class="bio">
+    <h2>Background</h2>
     <p>
-      I'm a game developer and designer focused on creating immersive gameplay
-      experiences. I'm currently completing my Computer Science degree while working
-      across both technical implementation and creative design.
+      I work across technical implementation and creative design: game systems and tools
+      on one side, 3D assets and visual development on the other. I'm currently
+      completing a Computer Science degree while building projects that ship.
     </p>
     <p>
-      My approach pairs efficient production practices with experimental ideas — work
+      My approach pairs efficient production with experimental ideas. The goal is work
       that is visually compelling and mechanically engaging, not one at the expense of
       the other.
     </p>
@@ -46,153 +41,101 @@
       and build experiences, and play a wide range of games with the community.
     </p>
 
-    <h3>The through-line</h3>
+    <h3>Approach</h3>
     <p>
       Whether it's building game systems, designing levels, or crafting 3D assets, I'm
-      driven by the same challenge: bringing interactive worlds to life.
+      driven by the same problem: bringing interactive worlds to life.
     </p>
 
-    <div class="resume">
-      <a class="btn btn--primary" href={site.resume} target="_blank" rel="noreferrer">
-        Download resume
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
-          <path d="M12 3v12M7 10l5 5 5-5M5 21h14" />
-        </svg>
-      </a>
-      <span class="note">PDF · Updated 2026</span>
-    </div>
+    <a class="text-link" href={site.resume} target="_blank" rel="noreferrer">
+      Download resume <Icon dir="up-right" size={14} />
+    </a>
   </div>
 </section>
 
-<section class="wrap details-wrap">
-  <div class="details" use:reveal>
+<section class="wrap details">
+  <dl>
     {#each details as item}
-      <article>
-        <h2>{item.label}</h2>
-        <p>{item.value}</p>
-        <span>{item.sub}</span>
-      </article>
+      <div>
+        <dt>{item.label}</dt>
+        <dd>{item.value}</dd>
+        <dd class="sub">{item.sub}</dd>
+      </div>
     {/each}
-  </div>
+  </dl>
 </section>
 
 <style>
   .about-grid {
     display: grid;
-    grid-template-columns: 0.85fr 1.15fr;
+    grid-template-columns: 0.8fr 1.2fr;
     gap: 4.5rem;
     align-items: start;
-    padding: 3rem 0 2rem;
-  }
-
-  .portrait {
-    position: sticky;
-    top: 110px;
+    padding: 3rem 0 4rem;
   }
 
   .portrait img {
     width: 100%;
     aspect-ratio: 1;
     object-fit: cover;
-    border: 1px solid var(--border);
-    border-radius: 20px;
-    filter: saturate(0.65) contrast(1.02);
-    transition: filter 0.5s ease, transform 0.5s ease;
-  }
-
-  .portrait:hover img {
-    filter: saturate(1) contrast(1);
-    transform: scale(1.01);
+    border-radius: 4px;
+    filter: saturate(0.7);
   }
 
   figcaption {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-top: 0.9rem;
+    padding-top: 0.75rem;
     color: var(--text-dim);
-    font-family: var(--mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-  }
-
-  .bio {
-    padding-top: 0.5rem;
+    font-size: 0.78rem;
   }
 
   .bio h2 {
-    margin-bottom: 1.5rem;
-    font-size: clamp(1.8rem, 3vw, 2.4rem);
-  }
-
-  .bio p {
     margin-bottom: 1.25rem;
-    color: var(--text-soft);
-    font-size: 1.02rem;
-    max-width: 62ch;
+    font-size: clamp(1.7rem, 3vw, 2.2rem);
   }
 
   .bio h3 {
-    margin: 2.5rem 0 0.85rem;
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    font-weight: 500;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--text-dim);
+    margin: 2.25rem 0 0.65rem;
   }
 
-  .resume {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    margin-top: 2.5rem;
+  .bio p {
+    margin-bottom: 1rem;
+    max-width: 66ch;
+    color: var(--text-soft);
+    font-size: 1rem;
   }
 
-  .note {
-    color: var(--text-dim);
-    font-family: var(--mono);
-    font-size: 0.7rem;
-  }
-
-  .details-wrap {
-    padding: 4rem 0 2rem;
+  .bio .text-link {
+    margin-top: 1.5rem;
   }
 
   .details {
+    padding-bottom: 2rem;
+  }
+
+  .details dl {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 1px;
-    overflow: hidden;
-    border: 1px solid var(--border);
-    border-radius: 18px;
-    background: var(--border);
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
   }
 
-  .details article {
-    padding: 1.6rem;
-    background: var(--bg);
-  }
-
-  .details h2 {
-    margin-bottom: 0.9rem;
-    font-family: var(--mono);
-    font-size: 0.66rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
+  dt {
+    margin-bottom: 0.5rem;
     color: var(--text-dim);
+    font-size: 0.78rem;
   }
 
-  .details p {
-    color: var(--text);
-    font-size: 0.95rem;
+  dd {
+    color: var(--text-soft);
+    font-size: 0.92rem;
+    line-height: 1.45;
   }
 
-  .details span {
+  dd.sub {
     color: var(--text-dim);
-    font-size: 0.8rem;
+    font-size: 0.85rem;
   }
 
   @media (max-width: 900px) {
@@ -202,23 +145,18 @@
     }
 
     .portrait {
-      position: static;
       max-width: 420px;
     }
 
-    .details {
+    .details dl {
       grid-template-columns: 1fr 1fr;
     }
   }
 
-  @media (max-width: 560px) {
-    .details {
+  @media (max-width: 520px) {
+    .details dl {
       grid-template-columns: 1fr;
-    }
-
-    .resume {
-      flex-direction: column;
-      align-items: start;
+      gap: 1.25rem;
     }
   }
 </style>

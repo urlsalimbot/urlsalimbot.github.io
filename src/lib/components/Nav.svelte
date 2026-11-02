@@ -30,10 +30,7 @@
 
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="{site.name} — home">
-      <span class="mark">E</span>
-      <span class="name">{site.name}</span>
-    </a>
+    <a class="brand" href="/" aria-label="{site.name} — home">{site.name}</a>
 
     <nav class="links" aria-label="Primary">
       {#each nav as item}
@@ -62,19 +59,15 @@
       </button>
     </div>
   </div>
-
 </header>
 
 {#if open}
   <div class="mobile" id="mobile-nav">
     <nav class="wrap" aria-label="Mobile">
-      {#each nav as item, i}
-        <a href={item.href} class:active={isActive(item.href)}>
-          <span class="index">0{i + 1}</span>
-          {item.label}
-          <span class="arrow">→</span>
-        </a>
+      {#each nav as item}
+        <a href={item.href} class:active={isActive(item.href)}>{item.label}</a>
       {/each}
+      <a class="email" href="mailto:{site.email}">{site.email}</a>
     </nav>
   </div>
 {/if}
@@ -86,8 +79,7 @@
     left: 0;
     right: 0;
     z-index: 50;
-    background: var(--header-bg);
-    backdrop-filter: blur(18px) saturate(140%);
+    background: var(--bg);
     border-bottom: 1px solid var(--border);
   }
 
@@ -99,49 +91,30 @@
   }
 
   .brand {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.7rem;
     color: var(--text);
     font-family: var(--display);
+    font-size: 1rem;
     font-weight: 600;
     letter-spacing: -0.02em;
     white-space: nowrap;
   }
 
-  .mark {
-    display: grid;
-    place-items: center;
-    width: 30px;
-    height: 30px;
-    border-radius: 8px;
-    background: var(--text);
-    color: var(--bg);
-    font-family: var(--mono);
-    font-size: 0.8rem;
-    font-weight: 500;
-  }
-
   .links {
     display: flex;
     align-items: center;
-    gap: 0.35rem;
+    gap: 1.6rem;
     margin-left: auto;
   }
 
   .links a {
     position: relative;
-    padding: 0.45rem 0.8rem;
-    border-radius: 999px;
     color: var(--text-dim);
-    font-size: 0.86rem;
-    font-weight: 500;
-    transition: color 0.2s ease, background 0.2s ease;
+    font-size: 0.88rem;
+    transition: color 0.2s ease;
   }
 
   .links a:hover {
     color: var(--text);
-    background: var(--surface);
   }
 
   .links a.active {
@@ -151,20 +124,18 @@
   .links a.active::after {
     content: '';
     position: absolute;
-    left: 50%;
-    bottom: 0;
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 1px;
     background: var(--accent);
-    transform: translateX(-50%);
   }
 
   .actions {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
-    margin-left: 0.5rem;
+    gap: 0.5rem;
+    margin-left: 0.4rem;
   }
 
   .menu {
@@ -172,11 +143,11 @@
     flex-direction: column;
     justify-content: center;
     gap: 5px;
-    width: 38px;
-    height: 38px;
-    padding: 0 10px;
+    width: 44px;
+    height: 44px;
+    padding: 0 12px;
     border: 1px solid var(--border);
-    border-radius: 50%;
+    border-radius: 6px;
   }
 
   .menu span {
@@ -184,7 +155,7 @@
     width: 100%;
     height: 1.5px;
     background: var(--text);
-    transition: transform 0.25s ease;
+    transition: transform 0.2s ease;
   }
 
   .menu span.open:first-child {
@@ -203,59 +174,38 @@
     bottom: 0;
     z-index: 49;
     overflow-y: auto;
+    background: var(--bg);
     border-top: 1px solid var(--border);
-    background: color-mix(in srgb, var(--bg) 94%, transparent);
-    backdrop-filter: blur(24px);
-    animation: drop 0.25s ease both;
   }
 
   .mobile nav {
     display: flex;
     flex-direction: column;
-    padding: 1rem 0 1.5rem;
+    padding: 1rem 0 2rem;
   }
 
   .mobile a {
-    display: flex;
-    align-items: baseline;
-    gap: 1rem;
-    padding: 0.8rem 0;
+    padding: 1rem 0;
+    border-bottom: 1px solid var(--border);
     color: var(--text-soft);
     font-family: var(--display);
-    font-size: 1.5rem;
+    font-size: 1.6rem;
+    font-weight: 500;
     letter-spacing: -0.02em;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .mobile a:last-child {
-    border-bottom: 0;
   }
 
   .mobile a.active {
     color: var(--accent);
   }
 
-  .mobile .index {
-    font-family: var(--mono);
-    font-size: 0.7rem;
+  .mobile .email {
+    margin-top: 2rem;
+    padding: 0;
+    border: 0;
     color: var(--text-dim);
-  }
-
-  .mobile .arrow {
-    margin-left: auto;
-    font-size: 1rem;
-    color: var(--text-dim);
-  }
-
-  @keyframes drop {
-    from {
-      opacity: 0;
-      transform: translateY(-8px);
-    }
-    to {
-      opacity: 1;
-      transform: none;
-    }
+    font-family: var(--sans);
+    font-size: 0.9rem;
+    letter-spacing: 0;
   }
 
   @media (max-width: 860px) {
@@ -279,10 +229,6 @@
 
     .mobile {
       top: 68px;
-    }
-
-    .name {
-      display: none;
     }
   }
 </style>

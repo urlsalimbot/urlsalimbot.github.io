@@ -27,10 +27,10 @@
   .theme {
     display: inline-grid;
     place-items: center;
-    width: 38px;
-    height: 38px;
+    width: 44px;
+    height: 44px;
     border: 1px solid var(--border);
-    border-radius: 50%;
+    border-radius: 6px;
     color: var(--text-soft);
     transition:
       color 0.2s ease,
