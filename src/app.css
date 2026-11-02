@@ -19,11 +19,15 @@
   --bg-soft: #111014;
   --text: #f3f0eb;
   --text-soft: #b8b2ba;
-  --text-dim: #8a838d;
+  --text-dim: #9a939e;
   --border: rgba(243, 240, 235, 0.14);
   --border-strong: rgba(243, 240, 235, 0.3);
   --accent: #ff5a36;
-  --light: rgba(255, 255, 255, 0.11);
+  --blob-a: rgba(255, 107, 61, 0.18);
+  --blob-b: rgba(158, 43, 37, 0.28);
+  --blob-c: rgba(176, 138, 62, 0.14);
+  --blob-d: rgba(44, 95, 92, 0.2);
+  --blob-e: rgba(255, 230, 200, 0.07);
   color-scheme: dark;
 
   --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
@@ -39,7 +43,11 @@
   --border: rgba(20, 17, 20, 0.14);
   --border-strong: rgba(20, 17, 20, 0.32);
   --accent: #c93a12;
-  --light: rgba(20, 17, 20, 0.08);
+  --blob-a: rgba(255, 107, 61, 0.14);
+  --blob-b: rgba(158, 43, 37, 0.1);
+  --blob-c: rgba(176, 138, 62, 0.16);
+  --blob-d: rgba(44, 95, 92, 0.1);
+  --blob-e: rgba(255, 255, 255, 0.45);
   color-scheme: light;
 }
 
@@ -251,6 +259,11 @@ img {
 .text-link .icon {
   width: 14px;
   height: 14px;
+  transition: transform 0.2s ease;
+}
+
+.text-link:hover .icon {
+  transform: translate(2px, -2px);
 }
 
 .meta {

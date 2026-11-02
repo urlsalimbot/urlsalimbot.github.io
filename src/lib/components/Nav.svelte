@@ -108,9 +108,13 @@
 
   .links a {
     position: relative;
+    background: linear-gradient(var(--accent), var(--accent)) no-repeat left bottom / 0 1px;
     color: var(--text-dim);
     font-size: 0.88rem;
-    transition: color 0.2s ease;
+    padding-bottom: 0.25rem;
+    transition:
+      color 0.2s ease,
+      background-size 0.25s ease;
   }
 
   .links a:hover {
@@ -121,14 +125,9 @@
     color: var(--text);
   }
 
-  .links a.active::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: -6px;
-    height: 1px;
-    background: var(--accent);
+  .links a:hover,
+  .links a.active {
+    background-size: 100% 1px;
   }
 
   .actions {
