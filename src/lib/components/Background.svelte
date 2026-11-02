@@ -14,8 +14,9 @@
     let raf;
 
     const move = (event) => {
-      tx = event.clientX;
-      ty = event.clientY;
+      // Push the light to the opposite side of the pointer.
+      tx = innerWidth - event.clientX;
+      ty = innerHeight - event.clientY;
     };
 
     const tick = () => {
