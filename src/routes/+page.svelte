@@ -101,7 +101,7 @@
   .hero-grid {
     display: grid;
     grid-template-columns: 1.25fr 0.75fr;
-    gap: 4rem;
+    gap: 4.5rem;
     align-items: end;
   }
 
@@ -111,17 +111,9 @@
     font-size: 1.02rem;
   }
 
-  .role span {
-    color: var(--accent);
-  }
-
   h1 {
     font-size: clamp(4rem, 9vw, 6rem);
     line-height: 0.9;
-  }
-
-  .intro {
-    padding-bottom: 0.4rem;
   }
 
   .lede {
@@ -140,13 +132,13 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 2rem;
-    margin-top: 3.5rem;
-    padding-top: 1.35rem;
+    margin-top: 4.5rem;
+    padding-top: 1.5rem;
     border-top: 1px solid var(--border);
   }
 
   dt {
-    color: var(--text-dim);
+    color: var(--text-soft);
     font-size: 0.78rem;
   }
 
@@ -289,7 +281,7 @@
     }
 
     .facts {
-      margin-top: 2.5rem;
+      margin-top: 3rem;
     }
 
     .work-strip {

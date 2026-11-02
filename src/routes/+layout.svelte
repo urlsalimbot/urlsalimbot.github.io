@@ -1,7 +1,7 @@
 <script>
   import '../app.css';
-  import Background from '#lib/components/Background.svelte';
   import Nav from '#lib/components/Nav.svelte';
+  import MeshGradient from '#lib/components/MeshGradient.svelte';
   import Footer from '#lib/components/Footer.svelte';
 
   let { children } = $props();
@@ -9,7 +9,7 @@
 
 <a class="skip" href="#main">Skip to content</a>
 
-<Background />
+<MeshGradient />
 <Nav />
 
 <main id="main" class="site-main">
