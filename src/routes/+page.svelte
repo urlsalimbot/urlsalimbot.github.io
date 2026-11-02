@@ -23,7 +23,7 @@
 
 <section class="hero wrap">
   <div class="copy">
-    <p class="eyebrow">Available for 2026 internships</p>
+    <p class="eyebrow">Available for internships</p>
     <h1>
       <span>Earl</span>
       <span>Salimbot<i>.</i></span>
@@ -107,7 +107,7 @@
 
     <div class="work-grid">
       {#each projects as project, i}
-        <a class="work" href="/projects/" use:reveal={{ delay: i * 70 }}>
+        <a class="work" href={project.href} target="_blank" rel="noreferrer" use:reveal={{ delay: i * 70 }}>
           <div class="thumb">
             <img src={project.image} alt={project.alt} loading="lazy" />
           </div>
@@ -118,7 +118,7 @@
             </div>
             <h3>{project.title}</h3>
             <p>{project.summary}</p>
-            <span class="more">Case study <b>↗</b></span>
+            <span class="more">Open project <b>↗</b></span>
           </div>
         </a>
       {/each}

@@ -25,7 +25,11 @@
 
     <div class="rows">
       {#each socials as item}
-        <a href={item.href} target="_blank" rel="noreferrer">
+        <a
+          href={item.href}
+          target={item.href.startsWith('http') ? '_blank' : undefined}
+          rel={item.href.startsWith('http') ? 'noreferrer' : undefined}
+        >
           <span class="label">{item.label}</span>
           <span class="handle">{item.handle}</span>
           <span class="arrow" aria-hidden="true">↗</span>

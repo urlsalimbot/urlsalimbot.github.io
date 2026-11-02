@@ -12,6 +12,20 @@
     path;
     open = false;
   });
+
+  $effect(() => {
+    if (!open) return;
+    const onKey = (event) => {
+      if (event.key === 'Escape') open = false;
+    };
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = previous;
+      window.removeEventListener('keydown', onKey);
+    };
+  });
 </script>
 
 <header class="site-header">
