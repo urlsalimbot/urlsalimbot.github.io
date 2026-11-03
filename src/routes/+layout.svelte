@@ -3,6 +3,16 @@
   import Nav from '#lib/components/Nav.svelte';
   import MeshGradient from '#lib/components/MeshGradient.svelte';
   import Footer from '#lib/components/Footer.svelte';
+  import { page } from '$app/state';
+
+  const isHome = $derived(page.url.pathname === '/');
+
+  $effect(() => {
+    document.body.style.overflow = isHome ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  });
 
   let { children } = $props();
 </script>
@@ -12,13 +22,24 @@
 <MeshGradient />
 <Nav />
 
-<main id="main" class="site-main">
+<main id="main" class="site-main" class:home-main={isHome}>
   {@render children()}
 </main>
 
-<Footer />
+{#if !isHome}<Footer />{/if}
 
 <style>
+  .home-main {
+    height: 100dvh;
+    padding-top: 96px;
+  }
+
+  @media (max-width: 600px) {
+    .home-main {
+      padding-top: 80px;
+    }
+  }
+
   .skip {
     position: fixed;
     top: -80px;

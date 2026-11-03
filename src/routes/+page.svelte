@@ -1,122 +1,99 @@
 <script>
   import Icon from '#lib/components/Icon.svelte';
-  import { highlights, projects, updates } from '#lib/data';
+  import { projects, updates } from '#lib/data';
+
+  const featured = projects[0];
+  const latest = updates[0];
 </script>
 
 <svelte:head>
-  <title>Earl Salimbot — Game Developer & 3D Artist</title>
+  <title>Earl Salimbot — Portfolio</title>
 </svelte:head>
 
-<section class="hero wrap">
-  <div class="hero-grid">
-    <div class="identity">
-      <p class="role">Game developer and <span>3D artist</span></p>
+<section class="landing wrap">
+  <div class="landing-grid">
+    <div class="lead">
+      <p class="role">Game developer and 3D artist</p>
       <h1>Earl<br />Salimbot</h1>
-    </div>
-
-    <div class="intro">
       <p class="lede">
         I build games and the art inside them, from first blockout to final frame. Nine
         years in a game studio, now finishing a Computer Science degree.
       </p>
       <div class="actions">
         <a class="btn btn--solid" href="/projects/">
-          Projects
+          View portfolio
           <Icon size={15} />
         </a>
         <a class="btn" href="/contact/">Contact</a>
       </div>
     </div>
+
+    <aside class="index">
+      <a class="feature" href={featured.href} target="_blank" rel="noreferrer">
+        <div class="thumb">
+          <img src={featured.image} alt={featured.alt} />
+        </div>
+        <div class="cap">
+          <span>Featured project</span>
+          <span>{featured.year} · {featured.tags[0]}</span>
+        </div>
+        <h2>{featured.title} <Icon dir="up-right" size={14} /></h2>
+      </a>
+
+      <a class="latest" href={latest.href} target="_blank" rel="noreferrer">
+        <span>Latest</span>
+        {latest.title}
+        <Icon size={12} />
+      </a>
+
+      <nav class="index-links" aria-label="Portfolio sections">
+        <a href="/projects/">Projects <Icon size={14} /></a>
+        <a href="/about/">About <Icon size={14} /></a>
+        <a href="/skills/">Skills <Icon size={14} /></a>
+        <a href="/contact/">Contact <Icon size={14} /></a>
+      </nav>
+    </aside>
   </div>
 
-  <dl class="facts">
-    <div><dt>Based</dt><dd>Bulacan, Philippines</dd></div>
-    <div><dt>Studying</dt><dd>BS Computer Science, 2027</dd></div>
-    <div><dt>Experience</dt><dd>9 years in production</dd></div>
-    <div><dt>Status</dt><dd>Open to internships</dd></div>
-  </dl>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <div class="section-head">
-      <h2>Selected work</h2>
-      <a class="text-link" href="/projects/">All projects <Icon size={14} /></a>
-    </div>
-
-    <div class="work-strip">
-      {#each projects as project}
-        <a class="tile" href={project.href} target="_blank" rel="noreferrer">
-          <div class="thumb">
-            <img src={project.image} alt={project.alt} loading="lazy" />
-          </div>
-          <div class="caption">
-            <h3>{project.title}</h3>
-            <span>{project.year} <Icon dir="up-right" size={12} /></span>
-          </div>
-          <p>{project.summary}</p>
-        </a>
-      {/each}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2>What I do</h2>
-    <div class="rows">
-      {#each highlights as item}
-        <article>
-          <h3>{item.title}</h3>
-          <p>{item.text}</p>
-        </article>
-      {/each}
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="wrap">
-    <h2>Updates</h2>
-    <div class="updates">
-      {#each updates as item}
-        <a href={item.href} target="_blank" rel="noreferrer">
-          <time>{item.date}</time>
-          <div>
-            <h3>{item.title}</h3>
-            <p>{item.text}</p>
-          </div>
-          <Icon dir="up-right" size={15} />
-        </a>
-      {/each}
-    </div>
+  <div class="landing-foot">
+    <span class="portfolio">Portfolio / 2026</span>
+    <span class="foot-mid">Bulacan, Philippines · Open to internships</span>
+    <a href="mailto:juhniarl@gmail.com">juhniarl@gmail.com</a>
   </div>
 </section>
 
 <style>
-  .hero {
-    padding: 4.5rem 0 1.5rem;
+  .landing {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: calc(100dvh - 96px);
+    padding: 2.5rem 0 1.25rem;
+    overflow: hidden;
   }
 
-  .hero-grid {
+  .landing-grid {
     display: grid;
-    grid-template-columns: 1.25fr 0.75fr;
-    gap: 4.5rem;
-    align-items: end;
+    grid-template-columns: minmax(0, 1.2fr) 380px;
+    gap: 4rem;
+    align-items: center;
+    flex: 1;
+    min-height: 0;
   }
 
   .role {
-    margin-bottom: 1.1rem;
     color: var(--text-soft);
     font-size: 1.02rem;
   }
 
   h1 {
-    font-size: clamp(4rem, 9vw, 6rem);
+    margin: 1.1rem 0 1.5rem;
+    font-size: clamp(3.6rem, 6.5vw, 6rem);
     line-height: 0.9;
   }
 
   .lede {
+    max-width: 44ch;
     color: var(--text-soft);
     font-size: 1.02rem;
   }
@@ -128,36 +105,12 @@
     margin-top: 1.75rem;
   }
 
-  .facts {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 2rem;
-    margin-top: 4.5rem;
-    padding-top: 1.5rem;
-    border-top: 1px solid var(--border);
-  }
-
-  dt {
-    color: var(--text-soft);
-    font-size: 0.78rem;
-  }
-
-  dd {
-    margin-top: 0.3rem;
-    color: var(--text-soft);
-    font-size: 0.92rem;
-    line-height: 1.4;
-  }
-
-  .work-strip {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
-  }
-
-  .tile {
-    display: block;
+  .index {
     min-width: 0;
+  }
+
+  .feature {
+    display: block;
   }
 
   .thumb {
@@ -174,154 +127,161 @@
     transition: transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
   }
 
-  .tile:hover .thumb img {
-    transform: scale(1.04);
+  .feature:hover .thumb img {
+    transform: scale(1.035);
   }
 
-  .caption {
+  .cap {
     display: flex;
-    align-items: baseline;
     justify-content: space-between;
     gap: 1rem;
-    margin-top: 0.85rem;
+    margin-top: 0.7rem;
+    color: var(--text-dim);
+    font-size: 0.78rem;
   }
 
-  .caption h3 {
-    font-size: 1.08rem;
+  .feature h2 {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.35rem;
+    font-size: 1.15rem;
     transition: color 0.2s ease;
   }
 
-  .tile:hover .caption h3 {
+  .feature:hover h2 {
     color: var(--accent);
   }
 
-  .caption span {
-    display: inline-flex;
-    align-items: center;
-    gap: 0.2rem;
+  .feature h2 :global(.icon) {
     color: var(--text-dim);
-    font-size: 0.78rem;
-    white-space: nowrap;
   }
 
-  .tile > p {
-    margin-top: 0.35rem;
-    color: var(--text-soft);
-    font-size: 0.9rem;
-  }
-
-  .rows {
-    margin-top: 2rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .rows article {
-    display: grid;
-    grid-template-columns: 240px 1fr;
-    gap: 2rem;
-    padding: 1.75rem 0;
+  .latest {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.75rem 0;
+    margin-top: 0.5rem;
     border-bottom: 1px solid var(--border);
+    color: var(--text-soft);
+    font-size: 0.82rem;
+    transition: color 0.2s ease;
   }
 
-  .rows p {
-    max-width: 64ch;
+  .latest span {
+    color: var(--text-dim);
+  }
+
+  .latest:hover {
+    color: var(--text);
+  }
+
+  .index-links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0 1.5rem;
+    margin-top: 1.5rem;
+  }
+
+  .index-links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--border);
     color: var(--text-soft);
     font-size: 0.95rem;
-  }
-
-  .updates {
-    margin-top: 2rem;
-    border-top: 1px solid var(--border);
-  }
-
-  .updates a {
-    display: grid;
-    grid-template-columns: 130px 1fr 18px;
-    gap: 2rem;
-    align-items: start;
-    padding: 1.4rem 0;
-    border-bottom: 1px solid var(--border);
-  }
-
-  .updates time {
-    color: var(--text-dim);
-    font-size: 0.78rem;
-    font-variant-numeric: tabular-nums;
-  }
-
-  .updates h3 {
-    margin-bottom: 0.25rem;
-    font-size: 1.02rem;
     transition: color 0.2s ease;
   }
 
-  .updates a:hover h3 {
+  .index-links a:hover {
     color: var(--accent);
   }
 
-  .updates p {
-    color: var(--text-soft);
-    font-size: 0.9rem;
+  .index-links :global(.icon) {
+    color: var(--text-dim);
   }
 
-  .updates :global(.icon) {
-    margin-top: 0.3rem;
+  .landing-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    padding-top: 1.25rem;
+    border-top: 1px solid var(--border);
     color: var(--text-dim);
+    font-size: 0.78rem;
+  }
+
+  .landing-foot .portfolio {
+    color: var(--text);
+  }
+
+  .landing-foot a {
+    color: var(--text-soft);
+    transition: color 0.2s ease;
+  }
+
+  .landing-foot a:hover {
+    color: var(--accent);
   }
 
   @media (max-width: 1000px) {
-    .hero-grid {
-      grid-template-columns: 1fr;
-      gap: 2rem;
-      align-items: start;
-    }
-
-    .intro {
-      max-width: 60ch;
-    }
-
-    .facts {
-      margin-top: 3rem;
-    }
-
-    .work-strip {
-      gap: 1rem;
+    .landing-grid {
+      grid-template-columns: minmax(0, 1fr) 300px;
+      gap: 3rem;
     }
   }
 
-  @media (max-width: 800px) {
-    .facts {
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-
-    .rows article {
-      grid-template-columns: 1fr;
-      gap: 0.75rem;
-    }
-
-    .work-strip {
+  @media (max-width: 860px) {
+    .landing-grid {
       grid-template-columns: 1fr;
       gap: 1.75rem;
+      align-items: start;
     }
 
-    .tile {
+    .index {
       max-width: 560px;
+    }
+
+    .index-links {
+      display: none;
     }
   }
 
   @media (max-width: 600px) {
-    .hero {
-      padding: 3rem 0 1rem;
+    .landing {
+      height: calc(100dvh - 80px);
+      padding: 1.25rem 0 0.75rem;
     }
 
-    .updates a {
-      grid-template-columns: 1fr 16px;
-      gap: 0.4rem 1rem;
+    .foot-mid {
+      display: none;
     }
 
-    .updates time {
-      grid-column: 1 / -1;
+    h1 {
+      margin: 0.9rem 0 1.15rem;
+      font-size: clamp(3rem, 13vw, 4.2rem);
+    }
+
+    .lede {
+      font-size: 0.98rem;
+    }
+
+    .landing-foot {
+      gap: 0.25rem 1.25rem;
+      padding-top: 0.75rem;
+      font-size: 0.72rem;
+    }
+  }
+
+  @media (max-height: 820px) and (max-width: 860px) {
+    .feature,
+    .latest {
+      display: none;
     }
   }
 </style>

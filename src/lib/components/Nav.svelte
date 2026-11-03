@@ -30,7 +30,10 @@
 
 <header class="site-header">
   <div class="wrap bar">
-    <a class="brand" href="/" aria-label="{site.name} — home">{site.name}</a>
+    <a class="brand" href="/" aria-label="{site.name} — portfolio home">
+      <span>{site.name}</span>
+      <small>Portfolio</small>
+    </a>
 
     <nav class="links" aria-label="Primary">
       {#each nav as item}
@@ -91,12 +94,23 @@
   }
 
   .brand {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.5rem;
     color: var(--text);
     font-family: var(--display);
     font-size: 1rem;
     font-weight: 600;
     letter-spacing: -0.02em;
     white-space: nowrap;
+  }
+
+  .brand small {
+    color: var(--text-dim);
+    font-family: var(--sans);
+    font-size: 0.72rem;
+    font-weight: 400;
+    letter-spacing: 0.02em;
   }
 
   .links {

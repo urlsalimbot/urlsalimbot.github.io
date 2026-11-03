@@ -30,21 +30,6 @@ export const socials = [
   { label: 'Email', href: 'mailto:juhniarl@gmail.com', handle: 'juhniarl@gmail.com' },
 ];
 
-export const highlights = [
-  {
-    title: 'Game Development',
-    text: 'Building interactive experiences in Godot and Unity, with a focus on responsive controls, game feel, and systems that hold up under play.',
-  },
-  {
-    title: '3D Asset Production',
-    text: 'High-quality models, textures, and animation in Blender, optimized for real-time rendering and built for production pipelines.',
-  },
-  {
-    title: '2D Art & Design',
-    text: 'Digital painting, sprites, and interface design in Krita and Aseprite, assembled into cohesive pipelines for 2D game art.',
-  },
-];
-
 export const updates = [
   {
     date: 'Jan 2026',
