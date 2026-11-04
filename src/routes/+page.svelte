@@ -203,6 +203,11 @@
 
   .index-links :global(.icon) {
     color: var(--text-dim);
+    transition: transform 0.2s ease;
+  }
+
+  .index-links a:hover :global(.icon) {
+    transform: translate(2px, -2px);
   }
 
   .landing-foot {

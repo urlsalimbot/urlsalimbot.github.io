@@ -189,6 +189,14 @@
     overflow-y: auto;
     background: var(--bg);
     border-top: 1px solid var(--border);
+    animation: menu-in 0.22s ease both;
+  }
+
+  @keyframes menu-in {
+    from {
+      opacity: 0;
+      transform: translateY(-8px);
+    }
   }
 
   .mobile nav {

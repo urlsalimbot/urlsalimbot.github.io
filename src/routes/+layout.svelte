@@ -3,9 +3,28 @@
   import Nav from '#lib/components/Nav.svelte';
   import MeshGradient from '#lib/components/MeshGradient.svelte';
   import Footer from '#lib/components/Footer.svelte';
+  import { onNavigate } from '$app/navigation';
   import { page } from '$app/state';
 
   const isHome = $derived(page.url.pathname === '/');
+
+  onNavigate((navigation) => {
+    if (!document.startViewTransition) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const leavingHome = navigation.from?.url.pathname === '/' && navigation.to?.url.pathname !== '/';
+    const enteringHome = navigation.to?.url.pathname === '/' && navigation.from?.url.pathname !== '/';
+
+    if (leavingHome) document.body.style.overflow = '';
+    if (enteringHome) document.body.style.overflow = 'hidden';
+
+    return new Promise((resolve) => {
+      document.startViewTransition(async () => {
+        resolve();
+        await navigation.complete;
+      });
+    });
+  });
 
   $effect(() => {
     document.body.style.overflow = isHome ? 'hidden' : '';
