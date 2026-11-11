@@ -1,7 +1,6 @@
 <script>
   import '../app.css';
   import Nav from '#lib/components/Nav.svelte';
-  import MeshGradient from '#lib/components/MeshGradient.svelte';
   import Footer from '#lib/components/Footer.svelte';
   import { onNavigate } from '$app/navigation';
   import { page } from '$app/state';
@@ -38,7 +37,6 @@
 
 <a class="skip" href="#main">Skip to content</a>
 
-<MeshGradient />
 <Nav />
 
 <main id="main" class="site-main" class:home-main={isHome}>

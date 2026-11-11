@@ -23,10 +23,7 @@
   --border: rgba(243, 240, 235, 0.14);
   --border-strong: rgba(243, 240, 235, 0.3);
   --accent: #ff5a36;
-  --mesh-a: rgba(255, 94, 44, 0.21);
-  --mesh-b: rgba(158, 35, 32, 0.46);
-  --mesh-c: rgba(178, 132, 54, 0.15);
-  --mesh-d: rgba(74, 92, 44, 0.34);
+  --felt: url('/felt-dark.jpg');
   color-scheme: dark;
 
   --display: 'Bricolage Grotesque', ui-sans-serif, system-ui, sans-serif;
@@ -42,10 +39,7 @@
   --border: rgba(20, 17, 20, 0.14);
   --border-strong: rgba(20, 17, 20, 0.32);
   --accent: #c93a12;
-  --mesh-a: rgba(255, 110, 50, 0.16);
-  --mesh-b: rgba(160, 40, 40, 0.1);
-  --mesh-c: rgba(180, 140, 55, 0.14);
-  --mesh-d: rgba(30, 100, 90, 0.1);
+  --felt: url('/felt-light.jpg');
   color-scheme: light;
 }
 
@@ -66,7 +60,10 @@ body {
   position: relative;
   min-height: 100vh;
   overflow-x: hidden;
-  background: transparent;
+  background-color: var(--bg);
+  background-image: var(--felt);
+  background-size: 860px;
+  background-repeat: repeat;
   color: var(--text-soft);
   font-family: var(--sans);
   font-size: 16px;
