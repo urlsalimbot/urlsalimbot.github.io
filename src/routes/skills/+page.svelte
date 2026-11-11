@@ -77,7 +77,7 @@
 
   .meta {
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
   }
 
   @media (max-width: 760px) {

@@ -85,7 +85,7 @@
   figcaption {
     padding-top: 0.75rem;
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
   }
 
   .bio h2 {
@@ -99,7 +99,7 @@
 
   .bio p {
     margin-bottom: 1rem;
-    max-width: 66ch;
+    max-width: 56ch;
     color: var(--text-soft);
     font-size: 1rem;
   }
@@ -124,7 +124,7 @@
   dt {
     margin-bottom: 0.5rem;
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
   }
 
   dd {

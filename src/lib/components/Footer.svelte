@@ -90,7 +90,7 @@
   .label {
     margin-bottom: 0.9rem;
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
   }
 
   nav a,
@@ -122,7 +122,7 @@
     padding: 1.5rem 0 2rem;
     border-top: 1px solid var(--border);
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
   }
 
   @media (max-width: 800px) {

@@ -137,7 +137,7 @@
     gap: 1rem;
     margin-top: 0.7rem;
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
   }
 
   .feature h2 {
@@ -218,7 +218,7 @@
     padding-top: 1.25rem;
     border-top: 1px solid var(--border);
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.85rem;
   }
 
   .landing-foot .portfolio {
@@ -279,7 +279,7 @@
     .landing-foot {
       gap: 0.25rem 1.25rem;
       padding-top: 0.75rem;
-      font-size: 0.72rem;
+      font-size: 0.8rem;
     }
   }
 

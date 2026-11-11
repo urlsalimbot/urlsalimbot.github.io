@@ -108,7 +108,7 @@
   .brand small {
     color: var(--text-dim);
     font-family: var(--sans);
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     font-weight: 400;
     letter-spacing: 0.02em;
   }
